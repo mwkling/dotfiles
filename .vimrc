@@ -16,39 +16,17 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'hashivim/vim-terraform'
-autocmd BufEnter *.hcl setlocal filetype=terraform
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'pbrisbin/vim-mkdir'
 
-Plugin 'dense-analysis/ale'
+" Plugin 'dense-analysis/ale'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 " TODO figure out way to make this work when creating new file
 Plugin 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
-let g:ycm_language_server =
-  \ [
-  \   {
-  \     'name': 'terraform',
-  \     'cmdline': [ 'terraform-lsp' ],
-  \     'filetypes': [ 'terraform' ]
-  \   }
-  \ ]
-
-" let g:ycm_language_server =
-"   \ [
-"   \   {
-"   \     'name': 'terraform',
-"   \     'cmdline': [ '/home/linuxbrew/.linuxbrew/bin/terraform-ls', 'serve' ],
-"   \     'filetypes': [ 'terraform' ]
-"   \   }
-"   \ ]
-let g:ycm_semantic_triggers = {
- \ 'terraform': [ '.' ]
- \}
 
 Plugin 'ycm-core/YouCompleteMe'
 " Don't show preview on top when completing
@@ -59,6 +37,14 @@ let g:ycm_show_diagnostics_ui = 0
 Plugin 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<leader><leader>"
 let g:UltiSnipsEditSplit="vertical"
+
+" Personal laptop
+Plugin 'leafgarland/typescript-vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'pangloss/vim-javascript'
+Plugin 'MaxMEllon/vim-jsx-pretty'
+Plugin 'peitalin/vim-jsx-typescript'
+Plugin 'tpope/vim-rails'
 
 call vundle#end()
 filetype plugin indent on
@@ -143,19 +129,5 @@ function! Black()
   edit
 endfunction
 command! -nargs=0 Black call Black()
-
-function! Tfmt()
-  if &modified != 0
-    echoh ErrorMsg | echo "Save changes before running terraform fmt" | echoh None
-    return
-  endif
-  call system("terraform fmt " . bufname("%"))
-  if v:shell_error != 0
-    echoh ErrorMsg | echo "Error running terraform fmt" | echoh None
-    return
-  endif
-  edit
-endfunction
-command! -nargs=0 Tfmt call Tfmt()
 
 " TODO disable Arrow keys in Normal mode
