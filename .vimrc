@@ -7,9 +7,12 @@ set ttimeout
 set ttimeoutlen=5
 set timeoutlen=1000
 
+" vertical help
+cnoreabbrev H vert h
+
 " always status line
 set laststatus=2
-set statusline=%f\ %h%w%m%r\ %=%(%l,%c%V\ %=\ %P%)
+set statusline=%f\ %y\ %h%w%m%r\ %=%(%{FugitiveStatusline()}\ %l,%c%V\ %=\ %P%)
 
 filetype off
 
@@ -27,6 +30,8 @@ Plugin 'pbrisbin/vim-mkdir'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rhubarb'
 " TODO figure out way to make this work when creating new file
 Plugin 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
@@ -128,6 +133,11 @@ noremap <leader>t :vertical :term<CR>
 noremap <leader>y "+y
 noremap <leader>d "+d
 noremap <leader>p "+p
+
+" fugitive
+noremap <leader><leader>gb :Gblame<CR>
+noremap <leader><leader>gs :Gstatus<CR>
+noremap <leader><leader>gh :GBrowse<CR>
 
 noremap ; :
 
