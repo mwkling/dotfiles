@@ -20,39 +20,16 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'hashivim/vim-terraform'
-autocmd BufEnter *.hcl setlocal filetype=terraform
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'pbrisbin/vim-mkdir'
 
-Plugin 'dense-analysis/ale'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 " TODO figure out way to make this work when creating new file
 Plugin 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
-let g:ycm_language_server =
-  \ [
-  \   {
-  \     'name': 'terraform',
-  \     'cmdline': [ 'terraform-lsp' ],
-  \     'filetypes': [ 'terraform' ]
-  \   }
-  \ ]
-
-" let g:ycm_language_server =
-"   \ [
-"   \   {
-"   \     'name': 'terraform',
-"   \     'cmdline': [ '/home/linuxbrew/.linuxbrew/bin/terraform-ls', 'serve' ],
-"   \     'filetypes': [ 'terraform' ]
-"   \   }
-"   \ ]
-let g:ycm_semantic_triggers = {
- \ 'terraform': [ '.' ]
- \}
 
 Plugin 'ycm-core/YouCompleteMe'
 " Don't show preview on top when completing
@@ -63,6 +40,27 @@ let g:ycm_show_diagnostics_ui = 0
 Plugin 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<leader><leader>"
 let g:UltiSnipsEditSplit="vertical"
+
+if $HOSTNAME == "mkling-tempo"
+  Plugin 'dense-analysis/ale'
+  Plugin 'hashivim/vim-terraform'
+  autocmd BufEnter *.hcl setlocal filetype=terraform
+  let g:ycm_language_server =
+    \ [
+    \   {
+    \     'name': 'terraform',
+    \     'cmdline': [ 'terraform-lsp' ],
+    \     'filetypes': [ 'terraform' ]
+    \   }
+    \ ]
+else
+  Plugin 'leafgarland/typescript-vim'
+  Plugin 'kchmck/vim-coffee-script'
+  Plugin 'pangloss/vim-javascript'
+  Plugin 'MaxMEllon/vim-jsx-pretty'
+  Plugin 'peitalin/vim-jsx-typescript'
+  Plugin 'tpope/vim-rails'
+endif
 
 Plugin 'jacoborus/tender.vim'
 
