@@ -41,7 +41,9 @@ Plugin 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<leader><leader>"
 let g:UltiSnipsEditSplit="vertical"
 
-if $HOSTNAME == "mkling-tempo"
+let hostname = substitute(system('hostname'), '\n', '', '')
+
+if hostname ==? "mkling-tempo"
   Plugin 'dense-analysis/ale'
   Plugin 'hashivim/vim-terraform'
   autocmd BufEnter *.hcl setlocal filetype=terraform
