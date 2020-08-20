@@ -7,6 +7,10 @@ set ttimeout
 set ttimeoutlen=5
 set timeoutlen=1000
 
+" always status line
+set laststatus=2
+set statusline=%f\ %h%w%m%r\ %=%(%l,%c%V\ %=\ %P%)
+
 filetype off
 
 " set the runtime path to include Vundle and initialize
@@ -58,10 +62,13 @@ else
   Plugin 'tpope/vim-rails'
 endif
 
+Plugin 'jacoborus/tender.vim'
+
 call vundle#end()
 filetype plugin indent on
 
 set wildmenu
+colorscheme tender
 
 " Tab management
 nnoremap <C-t> :tabnew<CR>
@@ -126,6 +133,14 @@ noremap ; :
 
 noremap <F9> :e ~/.vimrc<CR>
 tnoremap <Esc> <C-W>N
+
+" Slightly weird but easier to type
+noremap S ^
+noremap K $
+
+" Fix visual indent
+vnoremap > >gv
+vnoremap < <gv
 
 " Formatting functions
 function! Black()
