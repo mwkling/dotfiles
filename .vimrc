@@ -20,7 +20,6 @@ Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'pbrisbin/vim-mkdir'
 
-" Plugin 'dense-analysis/ale'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
@@ -38,13 +37,26 @@ Plugin 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<leader><leader>"
 let g:UltiSnipsEditSplit="vertical"
 
-" Personal laptop
-Plugin 'leafgarland/typescript-vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'pangloss/vim-javascript'
-Plugin 'MaxMEllon/vim-jsx-pretty'
-Plugin 'peitalin/vim-jsx-typescript'
-Plugin 'tpope/vim-rails'
+if $HOSTNAME == "mkling-tempo"
+  Plugin 'dense-analysis/ale'
+  Plugin 'hashivim/vim-terraform'
+  autocmd BufEnter *.hcl setlocal filetype=terraform
+  let g:ycm_language_server =
+    \ [
+    \   {
+    \     'name': 'terraform',
+    \     'cmdline': [ 'terraform-lsp' ],
+    \     'filetypes': [ 'terraform' ]
+    \   }
+    \ ]
+else
+  Plugin 'leafgarland/typescript-vim'
+  Plugin 'kchmck/vim-coffee-script'
+  Plugin 'pangloss/vim-javascript'
+  Plugin 'MaxMEllon/vim-jsx-pretty'
+  Plugin 'peitalin/vim-jsx-typescript'
+  Plugin 'tpope/vim-rails'
+endif
 
 call vundle#end()
 filetype plugin indent on
@@ -129,5 +141,19 @@ function! Black()
   edit
 endfunction
 command! -nargs=0 Black call Black()
+
+function! Tfmt()
+  if &modified != 0
+    echoh ErrorMsg | echo "Save changes before running terraform fmt" | echoh None
+    return
+  endif
+  call system("terraform fmt " . bufname("%"))
+  if v:shell_error != 0
+    echoh ErrorMsg | echo "Error running terraform fmt" | echoh None
+    return
+  endif
+  edit
+endfunction
+command! -nargs=0 Tfmt call Tfmt()
 
 " TODO disable Arrow keys in Normal mode
