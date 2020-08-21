@@ -8,7 +8,8 @@ set ttimeoutlen=5
 set timeoutlen=1000
 
 " vertical help
-cnoreabbrev H vert h
+cnoreabbrev h vert h
+cnoreabbrev help vert help
 
 " always status line
 set laststatus=2
@@ -32,6 +33,14 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rhubarb'
+
+Plugin 'kassio/neoterm'
+let g:neoterm_default_mod = 'vertical'
+let g:neoterm_autoinsert = 1
+let g:neoterm_keep_term_open = 0
+let g:neoterm_autoscroll = 1
+let g:neoterm_automap_keys = ',,t'
+
 " TODO figure out way to make this work when creating new file
 Plugin 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
@@ -51,7 +60,6 @@ let hostname = substitute(system('hostname'), '\n', '', '')
 if hostname ==? "mkling-tempo"
   Plugin 'dense-analysis/ale'
   Plugin 'hashivim/vim-terraform'
-  autocmd BufEnter *.hcl setlocal filetype=terraform
   let g:ycm_language_server =
     \ [
     \   {
@@ -60,6 +68,12 @@ if hostname ==? "mkling-tempo"
     \     'filetypes': [ 'terraform' ]
     \   }
     \ ]
+
+  augroup filetype_terraform
+    autocmd!
+    autocmd BufEnter *.hcl setlocal filetype=terraform
+    autocmd FileType terraform Tmap terraform validate
+  augroup END
 else
   Plugin 'leafgarland/typescript-vim'
   Plugin 'kchmck/vim-coffee-script'
@@ -131,6 +145,7 @@ noremap <leader>e :e<space>
 noremap <leader>g :Rg<CR>
 noremap <leader>t :vertical :term<CR>
 noremap <leader>h :History<CR>
+noremap <leader>t :Topen<CR>
 
 " System copy/paste
 noremap <leader>y "+y
