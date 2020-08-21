@@ -75,7 +75,7 @@ call vundle#end()
 filetype plugin indent on
 
 set wildmenu
-colorscheme tender
+autocmd vimenter * colorscheme tender
 
 " Tab management
 nnoremap <C-t> :tabnew<CR>
@@ -130,6 +130,7 @@ noremap <leader>s :sp<CR>
 noremap <leader>e :e<space>
 noremap <leader>g :Rg<CR>
 noremap <leader>t :vertical :term<CR>
+noremap <leader>h :History<CR>
 
 " System copy/paste
 noremap <leader>y "+y
@@ -153,6 +154,9 @@ noremap K $
 " Fix visual indent
 vnoremap > >gv
 vnoremap < <gv
+
+" Macro replay
+noremap Q @@
 
 " Formatting functions
 function! Black()
