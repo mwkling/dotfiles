@@ -13,7 +13,7 @@ cnoreabbrev help vert help
 
 " always status line
 set laststatus=2
-set statusline=%f\ %y\ %h%w%m%r\ %=%(%{FugitiveStatusline()}\ %l,%c%V\ %=\ %P%)
+set statusline=%f\ %y\ %h%w%m%r\ %=%(%{gutentags#statusline()}\ %{FugitiveStatusline()}\ %l,%c%V\ %=\ %P%)
 
 filetype off
 
@@ -33,6 +33,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rhubarb'
+Plugin 'tpope/vim-unimpaired'
 
 Plugin 'kassio/neoterm'
 let g:neoterm_default_mod = 'vertical'
@@ -50,12 +51,20 @@ Plugin 'ycm-core/YouCompleteMe'
 set completeopt-=preview
 " Interferes with ALE
 let g:ycm_show_diagnostics_ui = 0
+" let g:ycm_collect_identifiers_from_tags_files = 1
 
 Plugin 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<leader><leader>"
 let g:UltiSnipsEditSplit="vertical"
 
+Plugin 'ludovicchabant/vim-gutentags'
+
 let hostname = substitute(system('hostname'), '\n', '', '')
+
+Plugin 'leafgarland/typescript-vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'MaxMEllon/vim-jsx-pretty'
+Plugin 'peitalin/vim-jsx-typescript'
 
 if hostname ==? "mkling-tempo"
   Plugin 'dense-analysis/ale'
@@ -75,12 +84,8 @@ if hostname ==? "mkling-tempo"
     autocmd FileType terraform Tmap terraform validate
   augroup END
 else
-  Plugin 'leafgarland/typescript-vim'
-  Plugin 'kchmck/vim-coffee-script'
-  Plugin 'pangloss/vim-javascript'
-  Plugin 'MaxMEllon/vim-jsx-pretty'
-  Plugin 'peitalin/vim-jsx-typescript'
   Plugin 'tpope/vim-rails'
+  Plugin 'kchmck/vim-coffee-script'
 endif
 
 Plugin 'jacoborus/tender.vim'
@@ -146,6 +151,16 @@ noremap <leader>g :Rg<CR>
 noremap <leader>t :vertical :term<CR>
 noremap <leader>h :History<CR>
 noremap <leader>t :Topen<CR>
+noremap <leader>a :ALEToggle<CR>
+noremap <leader>l :lopen<CR>
+
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+
+" For navigating through vim history of a file
+nnoremap <leader>jh :0Gclog<CR>
+nnoremap ]q :cn<CR>
+nnoremap [q :cp<CR>
+
 
 " System copy/paste
 noremap <leader>y "+y
@@ -156,6 +171,10 @@ noremap <leader>p "+p
 noremap <leader><leader>gb :Gblame<CR>
 noremap <leader><leader>gs :Gstatus<CR>
 noremap <leader><leader>gh :GBrowse<CR>
+
+" TODO figure out good approach
+nnoremap <silent> <leader>c ev?\ \\|{\\|[\\|"<CR>l<C-]>:noh<CR>zz
+nnoremap <leader>n :tnext<CR>
 
 noremap ; :
 
@@ -172,6 +191,7 @@ vnoremap < <gv
 
 " Macro replay
 noremap Q @@
+set lazyredraw
 
 " Formatting functions
 function! Black()
@@ -203,3 +223,5 @@ endfunction
 command! -nargs=0 Tfmt call Tfmt()
 
 " TODO disable Arrow keys in Normal mode
+"
+let g:ycm_always_populate_location_list = 1
