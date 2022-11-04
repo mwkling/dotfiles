@@ -1,0 +1,34 @@
+# resource
+snippet resource
+resource "${1:type}" "${2:name}" {
+  $3
+}
+endsnippet
+
+# data
+snippet data
+data "${1:type}" "${2:name}" {
+  $3
+}
+endsnippet
+
+# output
+snippet output
+output "${1:name}" {
+  value = $2
+}
+endsnippet
+
+# variable
+snippet variable
+variable "${1:name}" {
+  $2
+}
+endsnippet
+
+# module
+snippet module
+module "${1:module}" {
+  $2
+}
+endsnippet

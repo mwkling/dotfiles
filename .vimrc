@@ -66,7 +66,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'MaxMEllon/vim-jsx-pretty'
 Plugin 'peitalin/vim-jsx-typescript'
 
-if hostname ==? "mkling-tempo"
+if hostname ==? "mike-tempo-thinkpad"
   Plugin 'dense-analysis/ale'
   Plugin 'hashivim/vim-terraform'
   let g:ycm_language_server =
@@ -144,6 +144,7 @@ noremap <leader>Q :qa<CR>
 noremap <leader>f :Files<CR>
 noremap <leader>e :Buffers<CR>
 let g:fzf_buffers_jump = 1
+let g:fzf_layout = {'down':  '40%'}
 noremap <leader>v :vsp<CR>
 noremap <leader>s :sp<CR>
 noremap <leader>e :e<space>
